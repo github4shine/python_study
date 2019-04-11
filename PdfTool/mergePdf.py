@@ -3,17 +3,25 @@ import glob
 import os
 
 def mergePdfFile(outFilePath,pdfFileList):
-    outputPdfFile = PdfFileWriter()
+    outputPdfFileWriter = PdfFileWriter()
     for pdfFile in pdfFileList :
-        tmpFile = file(pdfFile,"rb")
-        inputPdfFile = PdfFileReader(tmpFile)
+        inputPdfFile = PdfFileReader(file(pdfFile,"rb"))
         for page in inputPdfFile.pages:
-            outputPdfFile.addPage(page)
-    outFile=file(outFilePath,"wb")
-    outputPdfFile.write(outFile)
-    outFile.close()
+            outputPdfFileWriter.addPage(page)
+    outFileStream=file(outFilePath,"wb")
+    outputPdfFileWriter.write(outFileStream)
+    outFileStream.close()
 
-if(__name__=="__main__"):
+def splitPdfFile(outFilePath,inputFile,startPages,EndPages):
+    outputPdfFileWriter = PdfFileWriter()
+    inputPdfFile = PdfFileReader(file(inputFile,"rb"))
+    for pageIndex in range(startPages, EndPages):
+        outputPdfFileWriter.addPage(inputPdfFile.pages[pageIndex])
+    outFileStream=file(outFilePath,"wb")
+    outputPdfFileWriter.write(outFileStream)
+    outFileStream.close()
+
+if(__name__=="__main1__"):
     #filelist = glob.glob('*.pdf')
     filelist =os.listdir("e:\pdftest")
     files = []
