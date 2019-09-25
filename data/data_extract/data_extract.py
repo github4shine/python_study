@@ -8,6 +8,7 @@ import json
 import schedule
 import logging
 import logging.handlers as handlers
+import time
 
 
 #初始化日志
@@ -45,9 +46,12 @@ def extract_data():
     if not os.path.exists(save_path):
         os.mkdir(save_path)
     conn = pymssql.connect(config['server'], config['user'], config['password'], config['database'])
-    pre_date = datetime.now() - relativedelta(months=-1)
-    start_date = pre_date.strftime('%Y-%m')+"-1"
-    end_date = pre_date.strftime('%Y-%m') + "-31"
+    pre_date = datetime.now() + relativedelta(months=-1)
+    pre_date_str = pre_date.strftime('%Y-%m')
+    if(config['month_default_length'] == '1'):
+        pre_date_str = pre_date_str.replace('-0','-')
+    start_date = pre_date_str +"-01"
+    end_date = pre_date_str + "-31"
     sql = read_script().format(start_date,end_date)  #读取sql语句脚本
     mylog.info('开始读取数据库')
     df = pd.read_sql(sql,conn) #将数据库脚本读取成dataFrame
@@ -71,3 +75,4 @@ if __name__=="__main__":
     schedule.every().day.at(config['export_time']).do(schedule_job)#设置计划，每天设置的时间点
     while True:
         schedule.run_pending()
+        time.sleep(20)
