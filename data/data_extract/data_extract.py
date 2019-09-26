@@ -51,13 +51,18 @@ def extract_data():
     if(config['month_default_length'] == '1'):
         pre_date_str = pre_date_str.replace('-0','-')
     start_date = pre_date_str +"-01"
-    end_date = pre_date_str + "-31"
+    end_date = pre_date_str + "-32"
     sql = read_script().format(start_date,end_date)  #读取sql语句脚本
     mylog.info('开始读取数据库')
     df = pd.read_sql(sql,conn) #将数据库脚本读取成dataFrame
-    writer = pd.ExcelWriter(save_path +"/"+ str(uuid.uuid1()) + ".xlsx")
-    df.to_excel(writer,sheet_name = "data") #导出成excel
-    writer.save()
+    file_suffix = config["export_suffix"]
+    export_file_path = save_path +"/"+ str(uuid.uuid1()) + file_suffix
+    if(file_suffix == ".csv"):
+        df.to_csv(export_file_path, index=None)
+    else:
+        writer = pd.ExcelWriter(export_file_path)
+        df.to_excel(writer,sheet_name = "data") #导出成excel
+        writer.save()
     return True
 
 def schedule_job():

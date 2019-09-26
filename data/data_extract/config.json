@@ -4,7 +4,8 @@
     "password":"123456789",
     "database":"test",
     "export_path":"d:/data_export",
-    "export_day":"25",
-    "export_time":"17:16",
-    "month_default_length":"2"
+    "export_day":"26",
+    "export_time":"09:25",
+    "month_default_length":"2",
+    "export_suffix":".csv"
 }
