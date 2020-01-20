@@ -1,4 +1,4 @@
-from pyPdf import PdfFileReader,PdfFileWriter
+from PyPDF2 import PdfFileReader,PdfFileWriter
 import glob
 import os
 
@@ -14,14 +14,14 @@ def mergePdfFile(outFilePath,pdfFileList):
 
 def splitPdfFile(outFilePath,inputFile,startPages,EndPages):
     outputPdfFileWriter = PdfFileWriter()
-    inputPdfFile = PdfFileReader(file(inputFile,"rb"))
+    inputPdfFile = PdfFileReader(open(inputFile,"rb"))
     for pageIndex in range(startPages, EndPages):
         outputPdfFileWriter.addPage(inputPdfFile.pages[pageIndex])
-    outFileStream=file(outFilePath,"wb")
+    outFileStream=open(outFilePath,"wb")
     outputPdfFileWriter.write(outFileStream)
     outFileStream.close()
 
-if(__name__=="__main1__"):
+if(__name__=="__main11__"):
     #filelist = glob.glob('*.pdf')
     filelist =os.listdir("e:\pdftest")
     files = []
