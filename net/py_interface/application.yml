@@ -1,0 +1,59 @@
+S001:
+  funName:
+    HelloWorld 
+  params:
+    studentName:
+      pName:
+        stu
+    Password:
+      pName: #参数名
+        pwd
+    #sex:
+    #  pName:
+    #    sex
+    #  dic:
+    #    Sex_dic #指向dic
+    age:
+      pName:
+        age
+      dic:
+        Sex_dic
+    courses:
+      pName:
+        course
+      pType: #参数类型，标识的表示可以进行数组组装参数
+        string # 表示传参是一个字符数组
+S002:
+  funName:
+    helloworld
+  params:
+    student:
+      pName:
+        stu
+    password:
+      pName:
+        pwd
+    sex:
+      pName:
+        sex
+      dic:
+        Sex_dic
+    age:
+      pName:
+        age
+    course:
+      pName:
+        course
+      pType:
+        string
+Sex_dic:
+  default:
+    -1
+  male:
+    1
+  female:
+    2
+  unkown:
+    3
+  other:
+    9
