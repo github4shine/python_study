@@ -8,8 +8,8 @@ class LjSpider(scrapy.Spider):
     name = 'lj'
     allowed_domains = ['sz.lianjia.com']
     start_urls = ['https://sz.lianjia.com/ershoufang']
-    for page in range(2, 101):
-        start_urls.append("https://sz.lianjia.com/ershoufang/pg" + str(page))
+    #for page in range(2, 101):
+    #    start_urls.append("https://sz.lianjia.com/ershoufang/pg" + str(page))
 
     def __init__(self):
         option = webdriver.ChromeOptions()
@@ -22,12 +22,12 @@ class LjSpider(scrapy.Spider):
         urls = response.xpath(
             '//a[contains(@class,"LOGCLICKDATA")]/@href').getall()
         # time.sleep(2)
-        # next_url = self.base_url + response.xpath('//*[text()="下一页"]/@href').get()
+        next_url = self.base_url + response.xpath('//*[text()="下一页"]/@href').get()
         # print(next_url)
         for url in urls:
             time.sleep(2)
             yield scrapy.Request(url, callback=self.infoParse)
-        # yield scrapy.Request(next_url, callback=self.parse)
+        yield scrapy.Request(next_url, callback=self.parse)
 
     def infoParse(self, response):
         # time.sleep(2)
@@ -77,7 +77,7 @@ class LjSpider(scrapy.Spider):
         item['propertyOwn'] = response.xpath(
             "//div[@class='introContent']/div[2]/div[2]/ul/li[6]/span[2]/text()").get()
         item['pledge'] = response.xpath(
-            "//div[@class='introContent']/div[2]/div[2]/ul/li[7]/span[2]/text()").get()
+            "//div[@class='introContent']/div[2]/div[2]/ul/li[7]/span[2]/text()").get().replace('\n','').strip()
         item['mark'] = response.xpath(
             "//div[@class='introContent']/div[2]/div[2]/ul/li[8]/span[2]/text()").get()
         yield item

@@ -34,6 +34,6 @@ class LianjiaPipeline:
             time.strftime('%Y-%m-%d-%H-%M-%S')))
         df = pd.DataFrame(np.array(self.arrays), columns=self.columns)
         df.to_excel(writer, sheet_name="data", index=None)  # 导出成excel
-        print(self.arrays)
+        #print(self.arrays)
         writer.save()
         writer.close()
