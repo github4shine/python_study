@@ -12,7 +12,7 @@ browser.implicitly_wait(20) #隐式等待1s
 name = browser.find_element_by_id('j_username')
 name.send_keys("HA1")
 password = browser.find_element_by_id('j_password')
-password.send_keys("HA1")
+password.send_keys("1HA")
 btn = browser.find_element_by_id('loginbtn')
 btn.click()
 
